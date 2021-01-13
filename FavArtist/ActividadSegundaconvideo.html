@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OH WONDER</title>
+
+    <style>
+        /* Estilo para el cuerpo */
+        body {
+            background-image: url("ohwbg_00001.jpg");
+            z-index: 0;
+            margin: 0;
+            padding: 0;
+            background-attachment: fixed;
+            background-color: transparent;
+            height: 100%;
+            position: relative;
+       
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Estilo para las secciones*/
+        section {
+            width: 100%;
+            float: left;
+            margin-top: 50px;
+            margin-bottom: 50px;
+
+        }
+
+        /* Contenedor superior*/
+        .top-container {
+            padding: 50px;
+            text-align: center;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url("ohwl.png");
+            z-index: 10;
+
+            position: relative;
+
+            background-color: rgb(196, 248, 248, 0.4);
+            background-size: contain;
+        }
+
+        /*Ocultar barra que crea el menú*/
+        .header {
+            padding: 10px 16px;
+            background: transparent;
+            color: #f1f1f1;
+        }
+
+        /*Contenido principal*/
+        .content {
+            padding: 16px;
+        }
+
+        /*manetener menú fijo*/
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 99;
+        }
+
+        .sticky+.content {
+            padding-top: 102px;
+        }
+
+        /*Estilo del menú */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        /*Lista del menú*/
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: rgb(196, 248, 248, 0.4);
+            display: block;
+            transition: 0.3s;
+        }
+
+        /*Evento hover en la lista*/
+        .sidebar a:hover {
+            color: blanchedalmond;
+        }
+
+        /*Botón para cerrar menú*/
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        /*Botón del menú*/
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: rgba(240, 90, 63, 0.363);
+            color: blanchedalmond;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        /*Evento hover en el botón*/
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+        /*Mueve el contenido al abrir el menú*/
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+            .sidebar {
+                padding-top: 15px;
+            }
+
+            .sidebar a {
+                font-size: 18px;
+            }
+        }
+
+        .class {
+            color: white;
+            text-align: center;
+        }
+
+        /*Ajuste del video YouTube*/
+        .section_video {
+            text-align: center;
+            z-index: 0;
+
+            overflow: hidden;
+
+        }
+
+        /*Mantiene fijo Widget Spotify*/
+        .aside_spotify {
+            margin-top: 25px;
+            text-align: center;
+            position: fixed;
+            z-index: 0;
+            top: auto;
+        }
+
+        /*Pie de página*/
+        .footer {
+            float: left;
+            width: 100%;
+            text-align: right;
+
+            z-index: 1;
+            padding-bottom: 50px;
+
+        }
+
+        .footer p {
+            margin-left: 80%;
+            margin-right: 80px;
+            position: absolute;
+            z-index: 1;
+            font-weight: bolder;
+            color: blanchedalmond;
+            margin-bottom: 80px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        /*Contenedor galería*/
+        .slideshow-container {
+            max-width: 80%;
+            position: relative;
+            margin: auto;
+            z-index: 0;
+        }
+
+        /*Texto descriptivo de imagen*/
+        .text {
+            color: blanchedalmond;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /*Numeración de imágenes*/
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        /*Indicadores  de imagen*/
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: rgb(196, 248, 248, 0.4);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        /*Cambio de color del botón*/
+        .active {
+            background-color: rgba(240, 90, 63, 0.363);
+        }
+
+        /*Animación de transición*/
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        /*Estilo para textos dentro de article*/
+        .article_text {
+
+            color: blanchedalmond;
+            text-align: justify;
+            margin-left: 20px;
+            margin-right: 20px;
+            position: relative;
+            font-size: 20px;
+            font-style: italic;
+            font-weight: bold;
+            font-weight: bolder;
+        }
+
+        /*Centrar texto de reseña*/
+        .section_title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 50px;
+            margin-top: auto;
+            color: rgb(196, 248, 248, 0.4);
+        }
+
+        /*Contenedor para Integrantes*/
+        .container {
+            position: relative;
+            width: 35%;
+            margin: 0;
+            z-index: 0;
+            float: left;
+            margin-left: 50px;
+            margin-right: 50px;
+            overflow: hidden;
+        }
+
+        /*Imagen dentro del contenedor*/
+        .container img {
+            width: 100%;
+            height: 30%;
+            vertical-align: middle;
+        }
+
+        /*Contenedor del texto encima de la imagen*/
+        .container .content {
+            position: absolute;
+            bottom: 0;
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.5);
+            color: blanchedalmond;
+            font-size: larger;
+            width: 100%;
+            padding: 20px;
+            z-index: 0;
+            text-align: justify;
+        }
+
+        /*División de secciones*/
+        hr.dashed {
+
+            border-top: 5px dashed black;
+            border-bottom: 5px dashed black;
+        }
+
+        /*Contenedor para Discografía*/
+        .container2 {
+            position: relative;
+            width: 30%;
+            z-index: 0;
+            float: left;
+            margin-right: 15px;
+            margin-left: 15px;
+
+            overflow: hidden;
+
+        }
+
+        /*Imagen responsiva*/
+        .container2 img {
+            width: 100%;
+            height: auto;
+            border-radius: 30%;
+            z-index: 0;
+        }
+
+        /*Botón dentro de la imagen(contenedor)*/
+        .container2 .btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            background-color: #555;
+            color: rgb(196, 248, 248, 0.4);
+            font-weight: bolder;
+            font-size: 16px;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        /*Evento hover del botón*/
+        .container2 .btn:hover {
+            background-color: black;
+
+        }
+    </style>
+</head>
+
+<body id="body" class="body">
+
+    <div id="main" class="content">
+        <header>
+
+            <div class="top-container">
+                <div class="bgcolor"></div>
+            </div>
+        </header>
+        <nav>
+            <div class="header" id="myHeader">
+
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <ul>
+                        <li><a href="#section-video">Video</a></li>
+                        <li><a href="#section-review">Reseña</a></li>
+                        <li><a href="#section-members">Integrantes</a></li>
+                        <li><a href="#section-discography">Discografía</a></li>
+                        <li><a href="#section-gallery">Galería</a> </li>
+                        <li><a href="https://www.ohwondermusic.com/music/" target="blank">Sitio oficial</a></li>
+                    </ul>
+                </div>
+                <button class="openbtn" onclick="openNav()">☰ Menú</button>
+
+            </div>
+        </nav>
+
+
+        <main>
+
+
+            <div style="width: 75%; float: left;">
+
+                <hr class="dashed">
+                <section id="section-video" class="section_video">
+                    <h2 class="section_title">Video</h2>
+                    <iframe width="550" height="350" src="https://www.youtube.com/embed/0gspY-45Tho"
+                        allow="accelerometer;  autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe> </section>
+                <hr class="dashed">
+
+                <section id="section-review" class="section_review">
+
+                    <h2 class="section_title">Review</h2>
+                    <article class="article_text">
+
+                        <p>Oh Wonder es un dúo de pop alternativo con base en Londres, formado por Josephine
+                            Vander Gucht y Anthony West. Desde que publicaron su álbum debut han vivido un éxito
+                            internacional con sus canciones de pop alternativo suaves, de ritmo lento, con tintes de
+                            R&B. Empezaron a escribir, grabar y publicar una canción el primer día de cada mes en
+                            septiembre de 2014 (y hasta septiembre de 2015). Todas las canciones publicadas fueron
+                            unidas en un álbum homónimo puesto a la venta el 4 de septiembre de 2015, junto con dos
+                            canciones extra que no habían sido publicadas en ninguno de los meses anteriores.
+                        </p>
+                        <p> Una semana más tarde, tras su álbum debut, agotaron las entradas en sus shows de Londres,
+                            París, Los Ángeles y Nueva York.</p>
+                    </article>
+                </section>
+                <hr class="dashed">
+
+                <section id="section-members" class="section_members">
+                    <h2 class="section_title">Miembros</h2>
+                    <div class="container">
+                        <img src="jvg2_01.jpg" alt="Josephine">
+                        <div class="content">
+                            <a href="https://www.instagram.com/iamjosephinevg/" target="blank">
+                                <h1>Josephine Vander Gucht</h1>
+                            </a>
+                            <p>Nació el 5 de Abril de 1990 en Londres, Inglaterra. Piano, teclado y vocales.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <img src="aw_01.jpg" alt="Anthony">
+                        <div class="content">
+                            <a href="https://www.instagram.com/antwestmusic/" target="blank">
+                                <h1>Anthony West</h1>
+                            </a>
+                            <p>Nació el 16 de Enero de 1989 en Londres, Inglaterra. Guitarra y vocales.
+                            </p>
+                        </div>
+                    </div>
+
+
+                </section>
+                <hr class="dashed">
+
+                <section id="section-discography" class="section_discography">
+                    <h2 class="section_title">Discografía</h2>
+                    <div class="container2">
+                        <img src="ohw.jpg" alt="Snow">
+                        <a href="https://en.wikipedia.org/wiki/Oh_Wonder_(album)" target="blank" class="btn">Oh Wonder</a>
+
+                    </div>
+                    <div class="container2">
+                        <img src="ohw2.jpg" alt="Snow">
+                        <a href="https://en.wikipedia.org/wiki/Ultralife_(album)" target="blank" class="btn">Ultralife</a>
+
+                    </div>
+                    <div class="container2">
+                        <img src="ohw3.jpg" alt="Snow">
+                        <a href="https://en.wikipedia.org/wiki/No_One_Else_Can_Wear_Your_Crown"
+                            target="blank" class="btn">NECWYC</a>
+                    </div>
+                </section>
+                <hr class="dashed">
+
+                <section id="section-gallery" class="section_gallery">
+                    <h2 class="section_title">Galería</h2>
+                    <div class="slideshow-container">
+                        <div class="mySlides fade">
+                            <div class="numbertext">1 / 5</div>
+                            <img src="oh1.jpg" alt="1" style="width:100%">
+                            <div class="text">Oh Wonder</div>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <div class="numbertext">2 / 5</div>
+                            <img src="oh2.jpeg" alt="2" style="width:100%">
+                            <div class="text">Oh Wonder</div>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <div class="numbertext">3 / 5</div>
+                            <img src="oh3.jpg" alt="3" style="width:100%">
+                            <div class="text">Oh Wonder</div>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <div class="numbertext">4 / 5</div>
+                            <img src="oh6.jpg" alt="4" style="width:100%">
+                            <div class="text">Oh Wonder</div>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <div class="numbertext">5 / 5</div>
+                            <img src="oh5.png" alt="5" style="width:100%">
+                            <div class="text">Oh Wonder</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                        <span class="dot" onclick="currentSlide(4)"></span>
+                        <span class="dot" onclick="currentSlide(5)"></span>
+                    </div>
+                </section>
+            </div>
+            <div style="width: 25%; float:left">
+                <aside class="aside_spotify">
+                    <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO33HAB2" width="300"
+                        height="380" allow="encrypted-media"></iframe>
+                </aside>
+            </div>
+
+            <footer id="footer" class="footer">
+                <p>Copyright 2020</p>
+            </footer>
+    
+
+    </main>
+</div>
+    <script>
+        //Sticky del Header que contiene el Menú
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+        //Desplazamiento del menú
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+
+        }
+        //Animación automática para las imágenes
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 10000); 
+            }
+    </script>
+
+</body>
+
+</html>
